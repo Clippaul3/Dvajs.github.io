@@ -20,10 +20,12 @@ class Cart extends React.Component {
   render() {
    
     
-    const { products, subtotal, onCheckout, loading, checking,num,deleteProducts } = this.props;
+    const { products, subtotal, onCheckout, loading, checking,num,deleteProducts,doDecrease ,doIncrease} = this.props;
     const nodes = products.map((item, key) => (
       <li key={key}>
         {item.title} {item.price} x {item.quantity}
+        <button disabled={item.quantity==1} onClick={()=>doDecrease(item.id)}>-</button>
+        <button onClick={()=>doIncrease(item.id)}>+</button>
         <Button onClick={()=>deleteProducts(item.id,item.quantity)} style={{width:'20px',height:'20px',padding:'0',float:'right'}}><Icon type="close" style={{ fontSize: '20px' }}/></Button>
       </li>
     ));
@@ -38,13 +40,13 @@ class Cart extends React.Component {
           </span>
         </Button>
         <Drawer
-          title="Basic Drawer"
+          title="购物车"
           placement={this.state.placement}
           closable={false}
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <ul>{nodes}</ul>
+          <ul style={{listStyle:"none"}}>{nodes}</ul>
           <div>Total: {subtotal}</div>
           <div>
             {checking && <div style={{ color: 'red' }}>Checking ...</div>}
@@ -74,6 +76,18 @@ const mapDispatchToProps = (dispatch) => ({
    deleteProducts:(log,num)=>dispatch({
     type: 'cart/delete',
     payload:{log,num} 
-  })
+  }),
+    doDecrease:(id)=>dispatch({
+        type:'cart/minus',
+        payload: {
+            id
+        }
+    }),
+    doIncrease:(id)=>dispatch({
+        type:'cart/add',
+        payload: {
+            id
+        }
+    })
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

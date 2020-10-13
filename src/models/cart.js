@@ -27,6 +27,22 @@ export default {
         })
       
    },
+    *minus({payload: { id }}, {  put, select }) {
+      const product = yield select(state => state.products.byId[id]);
+      console.log('product', product);
+      const { cart } = yield select();
+
+
+      const num=cart.num-1;
+      yield put({
+        type: 'decrease',
+        payload: {
+          id,
+          num
+        }
+      })
+
+    },
     *checkout( {payload}, {call, put, select}) {
       const { cart } = yield select();
       console.log("checkout cart", cart);
@@ -55,12 +71,25 @@ export default {
   },
   reducers: {
     addToCart: (state, { payload: { id,num } }) => {
+      console.log('state',state)
       return {
         ...state,
         added: state.added.includes(id) ? [...state.added] : [...state.added, id],
         quantities: {
           ...state.quantities,
           [id]: (state.quantities[id] || 0) + 1
+        },
+        num:num
+      }
+    },
+    decrease: (state, { payload: { id,num } }) => {
+      console.log('state',state)
+      return {
+        ...state,
+        added: state.added.includes(id) ? [...state.added] : [...state.added, id],
+        quantities: {
+          ...state.quantities,
+          [id]: (state.quantities[id] || 0) - 1
         },
         num:num
       }

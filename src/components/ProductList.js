@@ -13,27 +13,25 @@ class ProductList extends React.Component {
  render() {
     const { products, addToCart, select } = this.props;
     const list = (select.productSize.length === 0 ? products : select.productSize).map((item, key) => (
-      <li key={key}>
+      <div key={key} className={'item-cloth'}>
         <div className='pname'>
           <img src={`./static/products/${item.sku}_1.jpg`} alt="" />
           <div>{item.title}</div>
           <div>price:${item.price}</div>
           <div>installments:{item.installments}*{Math.round((item.price / item.installments) * 100) / 100}$</div>
         </div>
-        <div>
-          <Button type="primary" onClick={() => addToCart(item.id)} disabled={!item.installments} style={{ color: '#000000', backgroundColor: "#e8e8e8", borderColor: '#f5f5f5' }}><p style={{ margin: 'auto', lineHeight: '0px' }}>添加购物车</p></Button>
+        <div className={'item-button'}>
+          <Button className={'buttons'} type="primary" onClick={() => addToCart(item.id)} disabled={!item.installments} ><p style={{ margin: 'auto', lineHeight: '0px' }}>添加购物车</p></Button>
         </div>
-      </li>
+      </div>
     ));
     
 
     return (
       <div>
-
-          
-        <ul className='item'>
+        <div className='item'>
           {list}
-        </ul>
+        </div>
       </div>
     );
   }

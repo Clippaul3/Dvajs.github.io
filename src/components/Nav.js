@@ -16,17 +16,17 @@ class Nav extends React.Component {
     const { Option } = Select;
     const { products, select , OnChange} = this.props;
    
- const children = [ <Option key={ "default"}>{ "default sort"}</Option>,<Option key={ "Highest"}>{ "Highest to lowest"}</Option>,<Option key={ "lowest"}>{ "lowest to Highest"}</Option>];
+ const children = [ <Option key={ "default"}>{ "默认排序"}</Option>,<Option key={ "Highest"}>{ "价格由高到低"}</Option>,<Option key={ "lowest"}>{ "价格由低到高"}</Option>];
   
 
     return (
-      <div>
-        <h1>{(select.productSize.length === 0 ? products.length : select.productSize.length)} Product(s)found</h1>
+      <div style={{paddingLeft:'150px'}}>
+        <h1>{(select.productSize.length === 0 ? products.length : select.productSize.length)} 件相关货物</h1>
         <div id="components-dropdown-demo-dropdown-button">
 
           
           <Select
-          defaultValue="default sort"
+          defaultValue="默认排序"
           onChange={(value)=>OnChange(value,select.size)}
           style={{ width: 200 }}
         >
