@@ -17,7 +17,6 @@ render() {
         <span style={{fontSize:'30px'}}>Size:</span>
         <CheckboxGroup
         options={sizes}
-        defaultValue={sizes}
         onChange={(value)=>{addToSize(value)}}/>
       </div>
     );

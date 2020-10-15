@@ -17,7 +17,7 @@ class ProductList extends React.Component {
         <div className='pname'>
           <img src={`./static/products/${item.sku}_1.jpg`} alt="" />
           <div>{item.title}</div>
-          <div>price:${item.price}</div>
+          <div>price:${Number(item.price).toFixed(2)}</div>
           <div>installments:{item.installments}*{Math.round((item.price / item.installments) * 100) / 100}$</div>
         </div>
         <div className={'item-button'}>
