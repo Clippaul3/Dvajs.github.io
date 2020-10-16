@@ -20,7 +20,7 @@ class App extends React.Component {
         return (
             <div className={'app-index'}>
                 <div><SelectSizesDemo/></div>
-                <div>
+                <div style={{flexGrow:1}}>
                     <Nav/>
                     <ProductList/>
                 </div>

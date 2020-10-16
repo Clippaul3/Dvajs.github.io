@@ -112,6 +112,7 @@ export default {
         },
         checkoutCompleted: () => initialState,
         deletelog: (state, {payload: {deleteAdded, deleteNum, log}}) => {
+            window.localStorage.removeItem('localCart')
             return {
                 ...state,
                 added: deleteAdded,
