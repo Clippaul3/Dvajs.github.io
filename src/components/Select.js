@@ -17,7 +17,11 @@ render() {
         <span style={{fontSize:'30px'}}>Size:</span>
         <CheckboxGroup
         options={sizes}
-        onChange={(value)=>{addToSize(value)}}/>
+        onChange={(value)=>{
+          console.log('看看值',value);
+          value = value.length == 0?sizes:value
+          addToSize(value)}
+        }/>
       </div>
     );
   }

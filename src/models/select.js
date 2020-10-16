@@ -15,8 +15,8 @@ export default {
       //const { selected } = yield select();
       
       const checkAdult=(product)=> {
-        for(var s=0; s<size.length;s++){
-          for(var i=0;i<product.availableSizes.length;i++){
+        for(let s=0; s<size.length;s++){
+          for(let i=0;i<product.availableSizes.length;i++){
             if (size[s]===product.availableSizes[i]){
               return product;
             }

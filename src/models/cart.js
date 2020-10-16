@@ -1,18 +1,20 @@
 import shop from "../api/shop";
+import {message} from "antd";
 
-const initialState = {
+const initialState = window.localStorage.localCart ? JSON.parse(window.localStorage.localCart) : {
     added: [],
     quantities: {},
     addedSelect: [],
     num: 0
-} || window.localStorage.localCart
+}
 export default {
     namespace: "cart",
     state: initialState,
     effects: {
-        * add({payload: {id}}, {put, select}) {
+        * add({payload: {id,size}}, {put, select}) {
             const product = yield select(state => state.products.byId[id]);
             console.log('product', product);
+            yield product.size = size
             const {cart} = yield select();
 
 
@@ -45,11 +47,15 @@ export default {
         * checkout({payload}, {call, put, select}) {
             const {cart} = yield select();
             console.log("checkout cart", cart);
+            yield window.localStorage.removeItem('localCart')
             const res = yield call(shop.buyProducts, cart);
             yield put({
                 type: "checkoutCompleted",
                 payload: res
             });
+            yield message.success('成功支付')
+
+            yield window.location.reload()
         },
         * delete({payload: {log, num}}, {put, select}) {
             const {cart} = yield select();
@@ -73,7 +79,15 @@ export default {
     reducers: {
         addToCart: (state, {payload: {id, num}}) => {
             console.log('state', state)
-
+            window.localStorage.localCart = JSON.stringify({
+                ...state,
+                added: state.added.includes(id) ? [...state.added] : [...state.added, id],
+                quantities: {
+                    ...state.quantities,
+                    [id]: (state.quantities[id] || 0) + 1
+                },
+                num: num
+            })
             return {
                 ...state,
                 added: state.added.includes(id) ? [...state.added] : [...state.added, id],
